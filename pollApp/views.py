@@ -57,11 +57,30 @@ def all_polls(request):
     print(questions)
     return render(request,'all_polls.html',{'questions':questions,'username':username})
 
-def vote(request):
-    pass
+def vote(request,id):
+    poll_que_data=Question.objects.filter(id=id).values_list('question','opt1','opt2','opt3','opt4')
+    poll_data_list=list(poll_que_data)
+    question=poll_data_list[0][0]
+    opt1=poll_data_list[0][1]
+    opt2=poll_data_list[0][2]
+    opt3=poll_data_list[0][3]
+    opt4=poll_data_list[0][4]
+    poll_data={
+        'question':question,
+        'options':[opt1,opt2,opt3,opt4]
+    }
+    return render(request,'vote.html',{'poll':poll_data})
 
 def result(request):
     pass
 
 def addquestion(request):
+    if request.method=='POST':
+        ques=request.POST['question']
+        opt1=request.POST['opt1']
+        opt2=request.POST['opt2']
+        opt3=request.POST['opt3']
+        opt4=request.POST['opt4']
+        question_data=Question(question=ques,opt1=opt1,opt2=opt2,opt3=opt3,opt4=opt4)
+        question_data.save()
     return render(request,'addquestion.html')

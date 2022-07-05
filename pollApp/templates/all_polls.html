@@ -5,7 +5,7 @@
     
     <div class="list-group">
       {% for question in questions %}
-      <a href="{{url 'poll_option' poll.id}}" class="list-group-item list-group-item-action">{{question}}</a>
+      <a href="{% url 'vote' question.id %}" class="list-group-item list-group-item-action">{{question}}</a>
       {% endfor %}
    </div>
 

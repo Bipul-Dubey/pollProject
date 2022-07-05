@@ -62,3 +62,6 @@ def vote(request):
 
 def result(request):
     pass
+
+def addquestion(request):
+    return render(request,'addquestion.html')

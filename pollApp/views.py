@@ -32,7 +32,18 @@ def signup(request):
     return render(request,'signup.html')
 
 def signin(request):
-    pass
+    if request.method=='POST':
+        username=request.POST.get('username')
+        pass1=request.POST['password']
+
+        user=authenticate(username=username,password=pass1)
+        if user is not None:
+            login(request,user)
+            return redirect('all_polls')
+        else:
+            messages.error(request,'Bad Credential!')
+            return redirect('signin')
+    return render(request,'login.html')
 
 def signout(request):
     pass

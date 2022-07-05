@@ -5,10 +5,14 @@
     <h4>{{ poll.question }}</h4>
     <ul class="list-group">
         {% for option in poll.options %}
+        {% for per in poll.vote_per %}
+        {% if forloop.counter == forloop.parentloop.counter %}
         <li class="list-group-item d-flex justify-content-between align-item-center">
             {{option}}
-            <span class="badge bg-primary rounded-pill">{{ "{{poll.per}}"forloop.counter}}%</span>
+            <span class="badge bg-primary rounded-pill">{{ per}}%</span>
         </li>
+        {% endif %}
+        {% endfor %}
         {% endfor %}
     </ul>
     <div class='my-5'>

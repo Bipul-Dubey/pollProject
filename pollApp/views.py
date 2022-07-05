@@ -71,11 +71,12 @@ def vote(request,id):
         'question':question,
         'options':[opt1,opt2,opt3,opt4]
     }
+    return render(request,'vote.html',{'poll':poll_data,'question':questions})
+
+def result(request,id):
     if request.method=='POST':
         poll=Question.objects.get(pk=id)
-        questions=Question.objects.all()
         sel_opt=request.POST['poll']
-        print(poll)
         print(sel_opt)
         if sel_opt=='option1':
             poll.opt1_cnt+=1
@@ -91,9 +92,6 @@ def vote(request,id):
             poll.save()
         else:
             return HttpResponse("<h1>Invalid Vote</h1>")
-    return render(request,'vote.html',{'poll':poll_data,'question':questions})
-
-def result(request,id):
     question=Question.objects.filter(id=id)
     poll_que_data=Question.objects.filter(id=id).values_list('question','opt1','opt2','opt3','opt4',
     'opt1_cnt','opt2_cnt','opt3_cnt','opt4_cnt')
@@ -107,18 +105,16 @@ def result(request,id):
     opt2_cnt=poll_data_list[0][6]
     opt3_cnt=poll_data_list[0][7]
     opt4_cnt=poll_data_list[0][8]
+    print(opt1_cnt,opt2_cnt,opt3_cnt,opt4_cnt)
     total=opt1_cnt+opt2_cnt+opt3_cnt+opt4_cnt
-    per1=opt1_cnt/total*100
-    per2=opt2_cnt/total*100
-    per3=opt3_cnt/total*100
-    per4=opt4_cnt/total*100
+    per1=round(opt1_cnt/total*100,2)
+    per2=round(opt2_cnt/total*100,2)
+    per3=round(opt3_cnt/total*100,2)
+    per4=round(opt4_cnt/total*100,2)
     poll_data={
         'question':question,
         'options':[opt1,opt2,opt3,opt4],
-        'per1':per1,
-        'per2':per2,
-        'per3':per3,
-        'per4':per4
+        'vote_per':[per1,per2,per3,per4]
     }
     print(poll_data)
     return render(request,'result.html',{'poll':poll_data,'question':question})

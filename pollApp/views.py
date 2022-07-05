@@ -46,10 +46,16 @@ def signin(request):
     return render(request,'login.html')
 
 def signout(request):
-    pass
+    logout(request)
+    messages.success(request,'You are successfully logout')
+    return redirect('signup')
 
 def all_polls(request):
-    pass
+    current_user = request.user
+    username=current_user.username
+    questions=Question.objects.all()
+    print(questions)
+    return render(request,'all_polls.html',{'questions':questions,'username':username})
 
 def vote(request):
     pass

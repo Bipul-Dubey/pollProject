@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    {%for message in messages%}
+    <h4 style="color:blue"><strong>Message: </strong> {{message}}</h4>
+    {% endfor %}
+
+
+    <h2>SignUp Page</h2>
+    <form action="/signup/" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input name="fname" type="text" class="form-control" id="exampleInputfName" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input name="lname" type="text" class="form-control" id="exampleInputlName" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">UserName</label>
+            <input name="username" type="text" class="form-control" id="exampleInputUser" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input name="pass1" type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword2" class="form-label">Re-Enter Password</label>
+            <input name="pass2" type="password" class="form-control" id="exampleInputPassword2">
+        </div>
+        {% if not user.is_authenticated %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {% endif %}
+    </form>
+</div>
+
+{% endblock body %}

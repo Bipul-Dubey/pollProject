@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    <h3 style="margin-bottom: 20px"><strong>Pick Your Choice</strong></h3>
+    <h4>question</h4>
+    <form action="" method="post">
+        <ul class="list-group" style="margin: 0px;">
+        <label for="">
+            <li class="list-group-item">
+                <input type="radio" class="form-check-input me-1" name="choice">
+                java
+            </li>
+        </label>
+        <label for="">
+            <li class="list-group-item">
+                <input type="radio" class="form-check-input me-1" name="choice">
+                javascript
+            </li>
+        </label>
+        <label for="">
+            <li class="list-group-item">
+                <input type="radio" class="form-check-input me-1" name="choice">
+                c++
+            </li>
+        </label>
+        <label for="">
+            <li class="list-group-item">
+                <input type="radio" class="form-check-input me-1" name="choice">
+                python
+            </li>
+        </label>
+        </ul>
+    </form>
+</div>
+{% endblock body %}

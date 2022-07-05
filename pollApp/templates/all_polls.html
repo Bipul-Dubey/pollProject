@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+ {% block body %}
+ <div class="container my-5">
+    <h5><strong>Welcome: </strong>Name</h5>
+    
+    <div class="list-group">
+      {% for question in questions %}
+      <a href="{{url 'poll_option' poll.id}}" class="list-group-item list-group-item-action">{{question}}</a>
+      {% endfor %}
+   </div>
+
+
+    <a href="{% url 'addquestion' %}"><button class="btn btn-primary my-2">Add Poll Question</button></a>
+ </div>
+ {% endblock body %}

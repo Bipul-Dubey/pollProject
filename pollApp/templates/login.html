@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-5">
+    {%for message in messages%}
+    <h4 style="color:blue"><strong>Message: </strong> {{message}}</h4>
+    {% endfor %}
+    <h2>SignIn Page</h2>
+    <form action="/signin/" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Enter UserName</label>
+            <input name="username" type="text" class="form-control" id="exampleInputUser" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+        </div>        
+        {% if not user.is_authenticated %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {% endif %}
+    </form>
+    <a href='/signup/'><button type="button" class="btn btn-primary my-5">Create New Account</button></a>
+</div>
+
+{% endblock body %}

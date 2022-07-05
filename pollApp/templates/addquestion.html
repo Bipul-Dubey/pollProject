@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container my-3">
+    <form action="/addquestion/" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="questionInputtext1" class="form-label"><h3>Question</h3></label>
+            <input name="question" type="text" class="form-control" id="questionInputtext1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputoption1" class="form-label">Option 1</label>
+            <input name="opt1" type="text" class="form-control" id="exampleInputOption1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputoption2" class="form-label">Option 2</label>
+            <input name="opt2" type="text" class="form-control" id="exampleInputOption2">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputoptio3" class="form-label">Option 3</label>
+            <input name="opt3" type="text" class="form-control" id="exampleInputOption3">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputoption4" class="form-label">Option 4</label>
+            <input name="opt4" type="text" class="form-control" id="exampleInputOption4">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class='my-5'>
+        <a href="/all_polls/"><button type="button" class="btn btn-primary">All Polls Questions</button></a>
+    </div>
+</div>
+{% endblock body %}

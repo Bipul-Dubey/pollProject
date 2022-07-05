@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -69,10 +70,33 @@ def vote(request,id):
         'question':question,
         'options':[opt1,opt2,opt3,opt4]
     }
+    if request.method=='POST':
+        poll=Question.objects.get(pk=id)
+        sel_opt=request.POST['poll']
+        print(poll)
+        print(sel_opt)
+        if sel_opt=='option1':
+            poll.opt1_cnt+=1
+            poll.save()
+            return redirect('result')
+        elif sel_opt=='option2':
+            poll.opt2_cnt+=1
+            poll.save()
+            return redirect('result')
+        elif sel_opt=='option3':
+            poll.opt3_cnt+=1
+            poll.save()
+            return redirect('result')
+        elif sel_opt=='option4':
+            poll.opt4_cnt+=1
+            poll.save()
+            return redirect('result')
+        else:
+            return HttpResponse("<h1>Invalid Vote</h1>")
     return render(request,'vote.html',{'poll':poll_data})
 
 def result(request):
-    pass
+    return render(request,'result.html')
 
 def addquestion(request):
     if request.method=='POST':

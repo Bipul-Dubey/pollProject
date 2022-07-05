@@ -10,7 +10,8 @@
         {% for option in poll.options %}
         <label>
             <li class="list-group-item">
-                <input type="radio" class="form-check-input me-1" name="choice">
+                {% comment %} <input class="form-check-input" type="radio" name="poll" id="exampleRadios1" value="option1" > {% endcomment %}
+                <input type="radio" class="form-check-input me-1" name="poll" value="option{{forloop.counter}}">
                 {{option}}
             </li>
         </label>

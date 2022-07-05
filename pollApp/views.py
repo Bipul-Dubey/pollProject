@@ -59,6 +59,7 @@ def all_polls(request):
     return render(request,'all_polls.html',{'questions':questions,'username':username})
 
 def vote(request,id):
+    questions=Question.objects.get(pk=id)
     poll_que_data=Question.objects.filter(id=id).values_list('question','opt1','opt2','opt3','opt4')
     poll_data_list=list(poll_que_data)
     question=poll_data_list[0][0]
@@ -72,31 +73,55 @@ def vote(request,id):
     }
     if request.method=='POST':
         poll=Question.objects.get(pk=id)
+        questions=Question.objects.all()
         sel_opt=request.POST['poll']
         print(poll)
         print(sel_opt)
         if sel_opt=='option1':
             poll.opt1_cnt+=1
             poll.save()
-            return redirect('result')
         elif sel_opt=='option2':
             poll.opt2_cnt+=1
             poll.save()
-            return redirect('result')
         elif sel_opt=='option3':
             poll.opt3_cnt+=1
             poll.save()
-            return redirect('result')
         elif sel_opt=='option4':
             poll.opt4_cnt+=1
             poll.save()
-            return redirect('result')
         else:
             return HttpResponse("<h1>Invalid Vote</h1>")
-    return render(request,'vote.html',{'poll':poll_data})
+    return render(request,'vote.html',{'poll':poll_data,'question':questions})
 
-def result(request):
-    return render(request,'result.html')
+def result(request,id):
+    question=Question.objects.filter(id=id)
+    poll_que_data=Question.objects.filter(id=id).values_list('question','opt1','opt2','opt3','opt4',
+    'opt1_cnt','opt2_cnt','opt3_cnt','opt4_cnt')
+    poll_data_list=list(poll_que_data)
+    question=poll_data_list[0][0]
+    opt1=poll_data_list[0][1]
+    opt2=poll_data_list[0][2]
+    opt3=poll_data_list[0][3]
+    opt4=poll_data_list[0][4]
+    opt1_cnt=poll_data_list[0][5]
+    opt2_cnt=poll_data_list[0][6]
+    opt3_cnt=poll_data_list[0][7]
+    opt4_cnt=poll_data_list[0][8]
+    total=opt1_cnt+opt2_cnt+opt3_cnt+opt4_cnt
+    per1=opt1_cnt/total*100
+    per2=opt2_cnt/total*100
+    per3=opt3_cnt/total*100
+    per4=opt4_cnt/total*100
+    poll_data={
+        'question':question,
+        'options':[opt1,opt2,opt3,opt4],
+        'per1':per1,
+        'per2':per2,
+        'per3':per3,
+        'per4':per4
+    }
+    print(poll_data)
+    return render(request,'result.html',{'poll':poll_data,'question':question})
 
 def addquestion(request):
     if request.method=='POST':

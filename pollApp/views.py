@@ -55,7 +55,6 @@ def all_polls(request):
     current_user = request.user
     username=current_user.username
     questions=Question.objects.all()
-    print(questions)
     return render(request,'all_polls.html',{'questions':questions,'username':username})
 
 def vote(request,id):
@@ -77,7 +76,6 @@ def result(request,id):
     if request.method=='POST':
         poll=Question.objects.get(pk=id)
         sel_opt=request.POST['poll']
-        print(sel_opt)
         if sel_opt=='option1':
             poll.opt1_cnt+=1
             poll.save()
@@ -105,7 +103,6 @@ def result(request,id):
     opt2_cnt=poll_data_list[0][6]
     opt3_cnt=poll_data_list[0][7]
     opt4_cnt=poll_data_list[0][8]
-    print(opt1_cnt,opt2_cnt,opt3_cnt,opt4_cnt)
     total=opt1_cnt+opt2_cnt+opt3_cnt+opt4_cnt
     per1=round(opt1_cnt/total*100,2)
     per2=round(opt2_cnt/total*100,2)
@@ -116,7 +113,6 @@ def result(request,id):
         'options':[opt1,opt2,opt3,opt4],
         'vote_per':[per1,per2,per3,per4]
     }
-    print(poll_data)
     return render(request,'result.html',{'poll':poll_data,'question':question})
 
 def addquestion(request):

@@ -125,3 +125,20 @@ def addquestion(request):
         question_data=Question(question=ques,opt1=opt1,opt2=opt2,opt3=opt3,opt4=opt4)
         question_data.save()
     return render(request,'addquestion.html')
+
+def current_user_profile(request):
+    current_user = request.user
+    user_id=current_user.id
+    username=current_user.username
+    email=current_user.email
+    fname=current_user.first_name
+    lname=current_user.last_name
+    name=(fname+" "+lname).capitalize()
+    user_data={
+        'id':user_id,
+        'username':username,
+        'email':email,
+        'name':name
+    }
+    return render(request,'profilepage.html',user_data)
+    

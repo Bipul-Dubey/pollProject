@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container my-2">
+    <div class="card mx-auto" style="width: 35rem; background-color:red:">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Name: </strong>{{ name }}</li>
+          <li class="list-group-item"><strong>Username: </strong>{{ username }}</li>
+          <li class="list-group-item"><strong>Email: </strong>{{ email }}</li>
+        </ul>
+      </div>
+</div>
+
+{% endblock body %}

@@ -18,9 +18,10 @@
         </div>        
         {% if not user.is_authenticated %}
         <button type="submit" class="btn btn-primary">Submit</button>
-        {% endif %}
+        
     </form>
-    <a href='/signup/'><button type="button" class="btn btn-primary my-5">Create New Account</button></a>
+    <a href={%url 'signup' %}><button type="button" class="btn btn-primary my-5">Create New Account</button></a>
+    {% endif %}
 </div>
 
 {% endblock body %}

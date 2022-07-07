@@ -3,6 +3,10 @@
  <div class="container my-5">
     <h5><strong>Welcome: </strong>{{username}}</h5>
     
+    {%for message in messages%}
+    <h4 style="color:blue"><strong>Message: </strong> {{message}}</h4>
+    {% endfor %}
+
     <ul class="list-group">
       {% for question in questions %}
       <li class="list-group-item">

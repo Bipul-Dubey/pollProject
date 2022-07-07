@@ -17,3 +17,10 @@ class Question(models.Model):
     
     def total(self):
         return self.opt1_cnt+self.opt2_cnt+self.opt3_cnt+self.opt4_cnt
+
+class Voter(models.Model):
+    question=models.ForeignKey(Question,on_delete=models.CASCADE,related_name='vote')
+    vote_id=models.IntegerField()
+
+    def __str__(self):
+        return str(self.vote_id)

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from .models import Question
+from .models import Question,Voter
 
 # Create your views here.
 def signup(request):
@@ -62,7 +62,12 @@ def all_polls(request):
 
 @login_required
 def vote(request,id):
+    current_user=request.user
+    user_id=current_user.id
     questions=Question.objects.get(pk=id)
+    if questions.vote.filter(vote_id=user_id):
+        messages.info(request,"You Already voted for this")
+        return redirect('all_polls')
     poll_que_data=Question.objects.filter(id=id).values_list('question','opt1','opt2','opt3','opt4')
     poll_data_list=list(poll_que_data)
     question=poll_data_list[0][0]
@@ -78,7 +83,16 @@ def vote(request,id):
 
 @login_required
 def result(request,id):
+    question=Question.objects.filter(id=id)
+    
     if request.method=='POST':
+
+        current_user=request.user
+        user_id=current_user.id
+
+        vote=Voter(vote_id=user_id,question_id=id)
+        vote.save()
+
         poll=Question.objects.get(pk=id)
         sel_opt=request.POST['poll']
         if sel_opt=='option1':
@@ -95,7 +109,6 @@ def result(request,id):
             poll.save()
         else:
             return HttpResponse("<h1>Invalid Vote</h1>")
-    question=Question.objects.filter(id=id)
     poll_que_data=Question.objects.filter(id=id).values_list('question','opt1','opt2','opt3','opt4',
     'opt1_cnt','opt2_cnt','opt3_cnt','opt4_cnt')
     poll_data_list=list(poll_que_data)

@@ -3,11 +3,15 @@
  <div class="container my-5">
     <h5><strong>Welcome: </strong>{{username}}</h5>
     
-    <div class="list-group">
+    <ul class="list-group">
       {% for question in questions %}
-      <a href="{% url 'vote' question.id %}" class="list-group-item list-group-item-action">{{question}}</a>
+      <li class="list-group-item">
+      <h4>{{question}}</h3>
+      <a href="{% url 'vote' question.id %}" <button class="btn btn-info mx-5">Vote</button></a>
+      <a href="{% url 'result' question.id %}"> <button class="btn btn-info my-2 mx-5">Result</button></a>
+      </li>
       {% endfor %}
-   </div>
+    </ul>
 
 
     <a href="{% url 'addquestion' %}"><button class="btn btn-primary my-2">Add Poll Question</button></a>

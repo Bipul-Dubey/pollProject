@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 from .models import Question
 
 # Create your views here.
@@ -51,12 +52,15 @@ def signout(request):
     messages.success(request,'You are successfully logout')
     return redirect('signup')
 
+
+@login_required
 def all_polls(request):
     current_user = request.user
     username=current_user.username
     questions=Question.objects.all()
     return render(request,'all_polls.html',{'questions':questions,'username':username})
 
+@login_required
 def vote(request,id):
     questions=Question.objects.get(pk=id)
     poll_que_data=Question.objects.filter(id=id).values_list('question','opt1','opt2','opt3','opt4')
@@ -72,6 +76,7 @@ def vote(request,id):
     }
     return render(request,'vote.html',{'poll':poll_data,'question':questions})
 
+@login_required
 def result(request,id):
     if request.method=='POST':
         poll=Question.objects.get(pk=id)
@@ -115,6 +120,8 @@ def result(request,id):
     }
     return render(request,'result.html',{'poll':poll_data,'question':question})
 
+
+@login_required
 def addquestion(request):
     if request.method=='POST':
         ques=request.POST['question']
@@ -126,6 +133,7 @@ def addquestion(request):
         question_data.save()
     return render(request,'addquestion.html')
 
+@login_required
 def current_user_profile(request):
     current_user = request.user
     user_id=current_user.id

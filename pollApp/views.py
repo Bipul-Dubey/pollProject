@@ -83,13 +83,11 @@ def vote(request,id):
 
 @login_required
 def result(request,id):
-    question=Question.objects.filter(id=id)
-    
+    question=Question.objects.filter(id=id)    
     if request.method=='POST':
 
         current_user=request.user
         user_id=current_user.id
-
         vote=Voter(vote_id=user_id,question_id=id)
         vote.save()
 
@@ -136,13 +134,23 @@ def result(request,id):
 
 @login_required
 def addquestion(request):
+    current_user=request.user
+    userquestion=current_user.user_question.all()
+    num_of_question=len(userquestion)
+    if num_of_question>5:
+        messages.info(request,"You Already Added 5 Question")
+        return redirect('all_polls')
     if request.method=='POST':
         ques=request.POST['question']
         opt1=request.POST['opt1']
         opt2=request.POST['opt2']
         opt3=request.POST['opt3']
         opt4=request.POST['opt4']
-        question_data=Question(question=ques,opt1=opt1,opt2=opt2,opt3=opt3,opt4=opt4)
+
+        user_id=current_user.id
+        user = User.objects.get(id=user_id)
+        question_data=Question(question=ques,opt1=opt1,opt2=opt2,opt3=opt3,opt4=opt4,user_id=user)
+
         question_data.save()
     return render(request,'addquestion.html')
 
@@ -155,11 +163,15 @@ def current_user_profile(request):
     fname=current_user.first_name
     lname=current_user.last_name
     name=(fname+" "+lname).capitalize()
+
+    user_all_question=Question.objects.filter(user_id=user_id)
+    user_question_list=list(user_all_question.values_list('question'))
     user_data={
         'id':user_id,
         'username':username,
         'email':email,
-        'name':name
+        'name':name,
+        'questions':user_question_list
     }
     return render(request,'profilepage.html',user_data)
     

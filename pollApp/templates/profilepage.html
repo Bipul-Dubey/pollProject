@@ -4,9 +4,17 @@
 <div class="container my-2">
     <div class="card mx-auto" style="width: 35rem; background-color:red:">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><strong>Name: </strong>{{ name }}</li>
-          <li class="list-group-item"><strong>Username: </strong>{{ username }}</li>
-          <li class="list-group-item"><strong>Email: </strong>{{ email }}</li>
+          <li class="list-group-item"><strong><h4>Name: </strong>{{ name }}</h4></li>
+          <li class="list-group-item"><strong><h4>Username: </strong>{{ username }}</h4></li>
+          <li class="list-group-item"><strong><h4>Email: </strong>{{ email }}</h4></li>
+        </ul>
+      </div>
+      <div>  
+        <h2>👇 Poll Question by You </h2>
+        <ul class="list-group my-3">
+          {% for question in questions %}
+          <li class="list-group-item">{{question.0}}</li>
+          {% endfor %}
         </ul>
       </div>
 </div>

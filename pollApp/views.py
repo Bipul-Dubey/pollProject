@@ -137,7 +137,7 @@ def addquestion(request):
     current_user=request.user
     userquestion=current_user.user_question.all()
     num_of_question=len(userquestion)
-    if num_of_question>5:
+    if num_of_question>4:
         messages.info(request,"You Already Added 5 Question")
         return redirect('all_polls')
     if request.method=='POST':

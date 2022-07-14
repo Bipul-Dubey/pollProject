@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from .models import Question,Voter
+# import pagination stuff
+from django.core.paginator import Paginator
 
 # Create your views here.
 def signup(request):
@@ -57,8 +59,11 @@ def signout(request):
 def all_polls(request):
     current_user = request.user
     username=current_user.username
-    questions=Question.objects.all()
-    return render(request,'all_polls.html',{'questions':questions,'username':username})
+    # set pagination
+    p=Paginator(Question.objects.all(),10)
+    page=request.GET.get('page')
+    ques=p.get_page(page)
+    return render(request,'all_polls.html',{'username':username,'question_list':ques})
 
 @login_required
 def vote(request,id):

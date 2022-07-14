@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container my-3">
-    <form action="/addquestion/" method="post">
+    <form action="{% url 'addquestion' %}" method="post">
         {% csrf_token %}
         <div class="mb-3">
             <label for="questionInputtext1" class="form-label"><h3>Question</h3></label>

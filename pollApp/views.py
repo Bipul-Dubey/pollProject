@@ -60,7 +60,7 @@ def all_polls(request):
     current_user = request.user
     username=current_user.username
     # set pagination
-    p=Paginator(Question.objects.all(),10)
+    p=Paginator(Question.objects.get_queryset().order_by('id'),10)
     page=request.GET.get('page')
     ques=p.get_page(page)
     return render(request,'all_polls.html',{'username':username,'question_list':ques})
@@ -180,3 +180,13 @@ def current_user_profile(request):
     }
     return render(request,'profilepage.html',user_data)
     
+
+def search_question(request):
+    if request.method=='POST':
+        text=request.POST['searchtext']
+        p=Paginator(Question.objects.filter(question__contains=text).order_by('id'),10)
+        page=request.GET.get('page')
+        ques=p.get_page(page)
+        return render(request,'searchquestion.html',{'searched':text,'question_list':ques})
+    else:
+        return render(request,'searchquestion.html',{'searched':'Your didnot Search Anything'})

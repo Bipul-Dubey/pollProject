@@ -8,7 +8,7 @@
 
 
     <h2>SignUp Page</h2>
-    <form action="/signup/" method="post">
+    <form action="{% url 'signup' %}" method="post">
         {% csrf_token %}
         <div class="mb-3">
             <label class="form-label">First Name</label>

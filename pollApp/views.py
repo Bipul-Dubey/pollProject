@@ -125,10 +125,13 @@ def result(request,id):
     opt3_cnt=poll_data_list[0][7]
     opt4_cnt=poll_data_list[0][8]
     total=opt1_cnt+opt2_cnt+opt3_cnt+opt4_cnt
-    per1=round(opt1_cnt/total*100,2)
-    per2=round(opt2_cnt/total*100,2)
-    per3=round(opt3_cnt/total*100,2)
-    per4=round(opt4_cnt/total*100,2)
+    try:
+        per1=round(opt1_cnt/total*100,2)
+        per2=round(opt2_cnt/total*100,2)
+        per3=round(opt3_cnt/total*100,2)
+        per4=round(opt4_cnt/total*100,2)
+    except:
+        per1,per2,per3,per4=0,0,0,0
     poll_data={
         'question':question,
         'options':[opt1,opt2,opt3,opt4],
